@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.31911.260
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Distance", "Distance", "{125DF61F-8EB7-4902-87A5-D16E082A3C20}"
 EndProject
@@ -22,6 +22,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mqtt", "Mqtt", "{C643D43E-63DF-40A8-9593-42A16C3542EF}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "MqttApp", "MqttApp\MqttApp.nfproj", "{92F0A6AF-D46D-4FC7-8CBB-E69364DDCE33}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bluino", "Bluino", "{DF1FC4ED-F4A9-4D7F-AA6A-DCFEA616F0FD}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "BluinoApp", "BluinoApp\BluinoApp.nfproj", "{5CA31E2B-94E7-4857-AEBD-492E5DFCB9D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +63,12 @@ Global
 		{92F0A6AF-D46D-4FC7-8CBB-E69364DDCE33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92F0A6AF-D46D-4FC7-8CBB-E69364DDCE33}.Release|Any CPU.Build.0 = Release|Any CPU
 		{92F0A6AF-D46D-4FC7-8CBB-E69364DDCE33}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{5CA31E2B-94E7-4857-AEBD-492E5DFCB9D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CA31E2B-94E7-4857-AEBD-492E5DFCB9D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CA31E2B-94E7-4857-AEBD-492E5DFCB9D6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{5CA31E2B-94E7-4857-AEBD-492E5DFCB9D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CA31E2B-94E7-4857-AEBD-492E5DFCB9D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CA31E2B-94E7-4857-AEBD-492E5DFCB9D6}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +79,7 @@ Global
 		{1BF55202-9931-4796-9D87-6E63B83A6777} = {7A0D2CE9-7D2A-4055-AB6A-3DA12DF2A61E}
 		{9594DAB8-972D-476E-8112-EE752AB2D570} = {99B3B1EB-66C1-4D5F-BE0E-FB3726AA7C77}
 		{92F0A6AF-D46D-4FC7-8CBB-E69364DDCE33} = {C643D43E-63DF-40A8-9593-42A16C3542EF}
+		{5CA31E2B-94E7-4857-AEBD-492E5DFCB9D6} = {DF1FC4ED-F4A9-4D7F-AA6A-DCFEA616F0FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {79CCB3B6-1913-45A6-9047-8520D1DD3C8D}
