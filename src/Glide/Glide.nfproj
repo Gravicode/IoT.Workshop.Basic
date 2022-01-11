@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>fc756a55-67cc-4a82-b50a-5a579af37d0c</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>Glide</RootNamespace>
+    <AssemblyName>Glide</AssemblyName>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <ItemGroup>
+    <Compile Include="Colors.cs" />
+    <Compile Include="Display\CalibrationWindow.cs" />
+    <Compile Include="Display\DisplayObject.cs" />
+    <Compile Include="Display\DisplayObjectContainer.cs" />
+    <Compile Include="Display\Graphics.cs" />
+    <Compile Include="Display\Window.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Events\Events.cs" />
+    <Compile Include="FontManager.cs" />
+    <Compile Include="Geom\Point.cs" />
+    <Compile Include="Geom\Rectangle.cs" />
+    <Compile Include="Geom\Size.cs" />
+    <Compile Include="Glide.cs" />
+    <Compile Include="GlideLoader.cs" />
+    <Compile Include="GlideTouch.cs" />
+    <Compile Include="GlideUtils.cs" />
+    <Compile Include="MessageBoxManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RadioButtonManager.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ResourcesExt.cs" />
+    <Compile Include="Tween.cs" />
+    <Compile Include="UI\Button.cs" />
+    <Compile Include="UI\Canvas.cs" />
+    <Compile Include="UI\CheckBox.cs" />
+    <Compile Include="UI\DataGrid\DataGrid.cs" />
+    <Compile Include="UI\DataGrid\DataGridColumn.cs" />
+    <Compile Include="UI\DataGrid\DataGridItem.cs" />
+    <Compile Include="UI\DataGrid\DataGridItemComparer.cs" />
+    <Compile Include="UI\Dropdown.cs" />
+    <Compile Include="UI\Image.cs" />
+    <Compile Include="UI\Input\BaseEvent.cs" />
+    <Compile Include="UI\Input\CaptureMode.cs" />
+    <Compile Include="UI\Input\GenericEvent.cs" />
+    <Compile Include="UI\Input\HardwareButton.cs" />
+    <Compile Include="UI\Input\TouchEvent.cs" />
+    <Compile Include="UI\Input\TouchEventHandler.cs" />
+    <Compile Include="UI\Input\TouchGesture.cs" />
+    <Compile Include="UI\Input\TouchGestureEventArgs.cs" />
+    <Compile Include="UI\Input\TouchGestureEventHandler.cs" />
+    <Compile Include="UI\Input\TouchInput.cs" />
+    <Compile Include="UI\Input\TouchMessages.cs" />
+    <Compile Include="UI\Keyboard\Keyboard.cs" />
+    <Compile Include="UI\Keyboard\KeyboardText.cs" />
+    <Compile Include="UI\List\IListItem.cs" />
+    <Compile Include="UI\List\List.cs" />
+    <Compile Include="UI\List\ListItem.cs" />
+    <Compile Include="UI\Modal\MessageBox.cs" />
+    <Compile Include="UI\Modal\Modal.cs" />
+    <Compile Include="UI\ProgressBar.cs" />
+    <Compile Include="UI\RadioButton.cs" />
+    <Compile Include="UI\Slider.cs" />
+    <Compile Include="UI\TextBlock.cs" />
+    <Compile Include="UI\Text\InputBox.cs" />
+    <Compile Include="UI\Text\PasswordBox.cs" />
+    <Compile Include="UI\Text\TextBox.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Graphics">
+      <HintPath>..\packages\nanoFramework.Graphics.1.0.0\lib\nanoFramework.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.ResourceManager">
+      <HintPath>..\packages\nanoFramework.ResourceManager.1.1.2\lib\nanoFramework.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Events">
+      <HintPath>..\packages\nanoFramework.Runtime.Events.1.9.1\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Native">
+      <HintPath>..\packages\nanoFramework.Runtime.Native.1.5.1\lib\nanoFramework.Runtime.Native.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Collections">
+      <HintPath>..\packages\nanoFramework.System.Collections.1.2.0\lib\nanoFramework.System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Text, Version=1.1.1.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Text.1.1.1\lib\nanoFramework.System.Text.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=1.0.1.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.IO.FileSystem.1.0.1\lib\System.IO.FileSystem.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Math">
+      <HintPath>..\packages\nanoFramework.System.Math.1.4.1\lib\System.Math.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\droid_reg08.tinyfnt" />
+    <None Include="Resources\droid_reg09.tinyfnt" />
+    <None Include="Resources\droid_reg10.tinyfnt" />
+    <None Include="Resources\droid_reg11.tinyfnt" />
+    <None Include="Resources\droid_reg12.tinyfnt" />
+    <None Include="Resources\droid_reg14.tinyfnt" />
+    <None Include="Resources\droid_reg18.tinyfnt" />
+    <None Include="Resources\droid_reg24.tinyfnt" />
+    <None Include="Resources\droid_reg32.tinyfnt" />
+    <None Include="Resources\droid_reg48.tinyfnt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>nFResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_Down.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_Up.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CheckBox_Off.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CheckBox_On.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DataGridIcon_Asc.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DataGridIcon_Desc.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DropdownButton_Down.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DropdownButton_Up.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DropdownText_Down.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DropdownText_Up.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Keyboard_320x128_Up_Lowercase.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Keyboard_320x128_Up_Numbers.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Keyboard_320x128_Up_Symbols.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Keyboard_320x128_Up_Uppercase.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Modal.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ProgressBar.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ProgressBar_Fill.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RadioButton.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TextBox.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System.XML\System.XML.nfproj" />
+  </ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <ProjectExtensions>
+    <ProjectCapabilities>
+      <ProjectConfigurationsDeclaredAsItems />
+    </ProjectCapabilities>
+  </ProjectExtensions>
+</Project>
