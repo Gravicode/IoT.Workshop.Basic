@@ -153,7 +153,7 @@ namespace Drivers.Vnc
                   continue;
                 case VncHost.ClientMessages.FramebufferUpdateRequest:
                   this.host.ReadFrameBufferUpdateRequest(this.frameBuffer);
-                  double totalMilliseconds1 = (DateTime.Now - now).TotalMilliseconds;
+                  double totalMilliseconds1 = (DateTime.UtcNow - now).TotalMilliseconds;
                   double num = totalMilliseconds1;
                   TimeSpan delayBetweenFrame = this.DelayBetweenFrame;
                   double totalMilliseconds2 = delayBetweenFrame.TotalMilliseconds;

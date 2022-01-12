@@ -11,6 +11,7 @@ namespace WeatherStation
     {
         public static void Main()
         {
+            //LORA using RN2903 Microchip
             var th1 = new Thread(new ThreadStart(loop));
             th1.Start();
             Thread.Sleep(Timeout.Infinite);
