@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>3dc88512-5b96-481f-b949-4786922888b5</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>ExpressionCode</RootNamespace>
+    <AssemblyName>ExpressionCode</AssemblyName>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <ItemGroup>
+    <Compile Include="ArrayLiteralAst.cs" />
+    <Compile Include="ArrayValue.cs" />
+    <Compile Include="AssignmentAst.cs" />
+    <Compile Include="AstExecutor.cs" />
+    <Compile Include="AstNode.cs" />
+    <Compile Include="AstNodeType.cs" />
+    <Compile Include="BinOpAst.cs" />
+    <Compile Include="BreakAst.cs" />
+    <Compile Include="BuiltInDeclAst.cs" />
+    <Compile Include="CharExtensions.cs" />
+    <Compile Include="ClsAst.cs" />
+    <Compile Include="ConstDeclAst.cs" />
+    <Compile Include="ConstValueAst.cs" />
+    <Compile Include="ContinueAst.cs" />
+    <Compile Include="DebugCallback.cs" />
+    <Compile Include="Debugger\AbortExecutionException.cs" />
+    <Compile Include="Debugger\DebugAction.cs" />
+    <Compile Include="Debugger\DebugEventArgs.cs" />
+    <Compile Include="Debugger\DebugEventHandler.cs" />
+    <Compile Include="Debugger\Variable.cs" />
+    <Compile Include="DefaultConsole.cs" />
+    <Compile Include="EndOfSourceAst.cs" />
+    <Compile Include="Errors.cs" />
+    <Compile Include="ExpressionAst.cs" />
+    <Compile Include="ExpressionExtensions.cs" />
+    <Compile Include="ExpressionStatementAst.cs" />
+    <Compile Include="FloatAst.cs" />
+    <Compile Include="FuncCallAst.cs" />
+    <Compile Include="FuncDeclAst.cs" />
+    <Compile Include="IConsole.cs" />
+    <Compile Include="IfAst.cs" />
+    <Compile Include="IfElseAst.cs" />
+    <Compile Include="IfElseIfAst.cs" />
+    <Compile Include="IndexAccessorAst.cs" />
+    <Compile Include="IntAst.cs" />
+    <Compile Include="InterpreterException.cs" />
+    <Compile Include="IO\StringReaderEx.cs" />
+    <Compile Include="IO\TextReaderEx.cs" />
+    <Compile Include="LocateAst.cs" />
+    <Compile Include="NegateAst.cs" />
+    <Compile Include="NopAst.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="Pool.cs" />
+    <Compile Include="PrintAst.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReturnAst.cs" />
+    <Compile Include="Scanner.cs" />
+    <Compile Include="Scope.cs" />
+    <Compile Include="ScriptAst.cs" />
+    <Compile Include="ScriptEngine.cs" />
+    <Compile Include="StatementAst.cs" />
+    <Compile Include="StatementBlockAst.cs" />
+    <Compile Include="Stdlib.cs" />
+    <Compile Include="StringAst.cs" />
+    <Compile Include="StringTable.cs" />
+    <Compile Include="SymTab.cs" />
+    <Compile Include="Token.cs" />
+    <Compile Include="TokenType.cs" />
+    <Compile Include="VarDeclAst.cs" />
+    <Compile Include="VariableAccessAst.cs" />
+    <Compile Include="WhileAst.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Native">
+      <HintPath>..\packages\nanoFramework.Runtime.Native.1.5.1\lib\nanoFramework.Runtime.Native.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Collections">
+      <HintPath>..\packages\nanoFramework.System.Collections.1.2.0\lib\nanoFramework.System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Text">
+      <HintPath>..\packages\nanoFramework.System.Text.1.1.1\lib\nanoFramework.System.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Math">
+      <HintPath>..\packages\nanoFramework.System.Math.1.4.1\lib\System.Math.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <ProjectExtensions>
+    <ProjectCapabilities>
+      <ProjectConfigurationsDeclaredAsItems />
+    </ProjectCapabilities>
+  </ProjectExtensions>
+</Project>
