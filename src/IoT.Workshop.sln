@@ -67,6 +67,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{CA
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SqliteDemoApp", "SqliteDemoApp\SqliteDemoApp.nfproj", "{7D5BDDCF-DB11-4A66-8AC8-E4D94B15E561}"
 EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "nanoFramework.Vnc", "nanoFramework.Vnc\nanoFramework.Vnc.nfproj", "{54A0B501-DFD9-4A9F-99EC-4D52E998EC11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -187,6 +189,12 @@ Global
 		{7D5BDDCF-DB11-4A66-8AC8-E4D94B15E561}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D5BDDCF-DB11-4A66-8AC8-E4D94B15E561}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7D5BDDCF-DB11-4A66-8AC8-E4D94B15E561}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{54A0B501-DFD9-4A9F-99EC-4D52E998EC11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54A0B501-DFD9-4A9F-99EC-4D52E998EC11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54A0B501-DFD9-4A9F-99EC-4D52E998EC11}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{54A0B501-DFD9-4A9F-99EC-4D52E998EC11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54A0B501-DFD9-4A9F-99EC-4D52E998EC11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54A0B501-DFD9-4A9F-99EC-4D52E998EC11}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -211,6 +219,7 @@ Global
 		{8F49720D-45D1-49AF-9B03-FB5692A3F9EA} = {0E352F3C-B906-48BA-A219-1A84476062AE}
 		{D3437B60-4C88-46E1-8650-3A9B8FACF865} = {9E16A8BE-26B9-43D8-B910-F2E54FBA63AE}
 		{7D5BDDCF-DB11-4A66-8AC8-E4D94B15E561} = {CA618783-535E-4B0D-A7F7-282E95D1F8D0}
+		{54A0B501-DFD9-4A9F-99EC-4D52E998EC11} = {18D1FB9A-D071-4FC5-B786-75B53C968AA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {79CCB3B6-1913-45A6-9047-8520D1DD3C8D}
