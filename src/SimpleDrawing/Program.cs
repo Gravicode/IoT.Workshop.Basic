@@ -1,6 +1,9 @@
 using BMC.Drivers.BasicGraphics;
 using nanoFramework.UI;
 using System;
+using System.Device.Gpio;
+using System.Device.I2c;
+using System.Device.Spi;
 using System.Diagnostics;
 using System.Threading;
 
@@ -10,11 +13,29 @@ namespace SimpleDrawing
     {
         public static void Main()
         {
-            var basicGfx = new BasicGraphicsImp(320,240);
+            //demo using internal graphic controller
+            DemoBasic();
+            
+            //demo st7735
+            //DemoST7735();
+            
+            //demossd1306
+            //DemoSSD1306();
+
+            Thread.Sleep(Timeout.Infinite);
+
+            // Browse our samples repository: https://github.com/nanoframework/samples
+            // Check our documentation online: https://docs.nanoframework.net/
+            // Join our lively Discord community: https://discord.gg/gCyBu8T
+        }
+
+        static void DemoBasic()
+        {
+            var basicGfx = new BasicGraphicsImp(320, 240);
             var colorBlue = BasicGraphics.ColorFromRgb(0, 0, 255);
             var colorGreen = BasicGraphics.ColorFromRgb(0, 255, 0);
             var colorRed = BasicGraphics.ColorFromRgb(255, 0, 0);
-            var colorWhite = BasicGraphics.ColorFromRgb(255, 255, 255);
+            //var colorWhite = BasicGraphics.ColorFromRgb(255, 255, 255);
 
             basicGfx.Clear();
             basicGfx.DrawString("NanoFramework Kick Ass!", colorGreen, 15, 15, 2, 1);
@@ -30,13 +51,60 @@ namespace SimpleDrawing
             Thread.Sleep(3000);
             //bounching balls demo
             var balls = new BouncingBalls(basicGfx);
-            
+            Thread.Sleep(500);
 
-            Thread.Sleep(Timeout.Infinite);
+        }
+        static void DemoST7735()
+        {
+            //pin esp32
+            //cs = 16, control = 17, reset = 23
+            var basicGfx = new ST7735Imp(Sitronix.ST7735.ScreenSize._160x128,nanoFramework.Hardware.Esp32.Gpio.IO16, nanoFramework.Hardware.Esp32.Gpio.IO17, nanoFramework.Hardware.Esp32.Gpio.IO23);
+            var colorBlue = BasicGraphics.ColorFromRgb(0, 0, 255);
+            var colorGreen = BasicGraphics.ColorFromRgb(0, 255, 0);
+            var colorRed = BasicGraphics.ColorFromRgb(255, 0, 0);
+            //var colorWhite = BasicGraphics.ColorFromRgb(255, 255, 255);
 
-            // Browse our samples repository: https://github.com/nanoframework/samples
-            // Check our documentation online: https://docs.nanoframework.net/
-            // Join our lively Discord community: https://discord.gg/gCyBu8T
+            basicGfx.Clear();
+            basicGfx.DrawString("NanoFramework Kick Ass!", colorGreen, 15, 15, 2, 1);
+            basicGfx.DrawString("BMC Training", colorBlue, 35, 40, 2, 2);
+            basicGfx.DrawString("ESP32 - STM32F4", colorRed, 35, 60, 2, 2);
+
+            Random color = new Random();
+            for (var i = 20; i < 140; i++)
+                basicGfx.DrawCircle((uint)color.Next(), i, 100, 15);
+
+            basicGfx.Flush();
+
+            Thread.Sleep(3000);
+            //bounching balls demo
+            var balls = new BouncingBalls(basicGfx);
+            Thread.Sleep(500);
+
+        } 
+        static void DemoSSD1306()
+        {
+            var basicGfx = new SSD1306Imp();
+            var colorBlue = BasicGraphics.ColorFromRgb(0, 0, 255);
+            var colorGreen = BasicGraphics.ColorFromRgb(0, 255, 0);
+            var colorRed = BasicGraphics.ColorFromRgb(255, 0, 0);
+            //var colorWhite = BasicGraphics.ColorFromRgb(255, 255, 255);
+
+            basicGfx.Clear();
+            basicGfx.DrawString("NanoFramework Kick Ass!", colorGreen, 15, 15, 2, 1);
+            basicGfx.DrawString("BMC Training", colorBlue, 35, 40, 2, 2);
+            basicGfx.DrawString("ESP32 - STM32F4", colorRed, 35, 60, 2, 2);
+
+            Random color = new Random();
+            for (var i = 20; i < 140; i++)
+                basicGfx.DrawCircle((uint)color.Next(), i, 100, 15);
+
+            basicGfx.Flush();
+
+            Thread.Sleep(3000);
+            //bounching balls demo
+            var balls = new BouncingBalls(basicGfx);
+            Thread.Sleep(500);
+
         }
     }
 
@@ -73,7 +141,64 @@ namespace SimpleDrawing
             screen.Dispose();
         }
     }
+    public class ST7735Imp : BasicGraphics, IDisposable
+    {
+        
+        Sitronix.ST7735.ST7735Controller screen;
+        public ST7735Imp(Sitronix.ST7735.ScreenSize screenSize, int CSPinNumber, int PinControl, int PinReset)
+        {
+            var gpio = new GpioController();
+            var pinCS = gpio.OpenPin(CSPinNumber,PinMode.Output);
+            var pinControl = gpio.OpenPin(PinControl,PinMode.Output);
+            var pinReset = gpio.OpenPin(PinReset,PinMode.Output);
 
+            var spiConn = Sitronix.ST7735.ST7735Controller.GetConnectionSettings(PinValue.High,pinCS);
+            SpiDevice spi = new SpiDevice(spiConn);
+            screen = new Sitronix.ST7735.ST7735Controller(spi, pinControl, pinReset, screenSize);
+            this.Width = screen.Width;
+            this.Height = screen.Height;
+            screen.SetDataAccessControl(true, true, false, false); //Rotate the screen.
+            screen.SetDrawWindow(0, 0, Width, Height);
+            screen.Enable();
+        }
+       
+        // You may need to add this to send an optional buffer...
+        public void Flush()
+        {
+            screen.DrawBuffer(this.Buffer);
+        }
+
+        public void Dispose()
+        {
+            screen.Dispose();
+        }
+    }
+
+    public class SSD1306Imp : BasicGraphics, IDisposable
+    {
+
+        SolomonSystech.SSD1306.SSD1306Controller screen;
+        public SSD1306Imp()
+        {
+            var i2cConn = SolomonSystech.SSD1306.SSD1306Controller.GetConnectionSettings();
+            I2cDevice i2c = new I2cDevice(i2cConn);
+            screen = new SolomonSystech.SSD1306.SSD1306Controller(i2c);
+            this.Width = screen.Width;
+            this.Height = screen.Height;
+            
+        }
+
+        // You may need to add this to send an optional buffer...
+        public void Flush()
+        {
+            screen.DrawBufferNative(this.Buffer);
+        }
+
+        public void Dispose()
+        {
+            screen.Dispose();
+        }
+    }
     public class BouncingBalls
     {
         struct Rectangle
@@ -94,9 +219,9 @@ namespace SimpleDrawing
         struct Point { public int X; public int Y; };
         private Rectangle[] BallLocation;
         private Point[] BallVelocity;
-        private BasicGraphicsImp Screen { get; set; }
+        private BasicGraphics Screen { get; set; }
 
-        public BouncingBalls(BasicGraphicsImp fullScreen)
+        public BouncingBalls(BasicGraphics fullScreen)
         {
             Screen = fullScreen;
             SetupBalls();
@@ -189,7 +314,7 @@ namespace SimpleDrawing
             {
                 Screen.DrawCircle((uint)nanoFramework.Presentation.Media.Color.Yellow, BallLocation[i].X, BallLocation[i].Y, BallLocation[i].Height/2);
             }
-            Screen.Flush();
+            //Screen.Flush();
         }
     }
     public static class Extensions
