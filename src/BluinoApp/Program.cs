@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Device.Gpio;
 //using System.Device.Pwm;
 using System.Diagnostics;
@@ -43,6 +44,11 @@ namespace BluinoApp
             Debug.WriteLine("Hello from nanoFramework!");
             s_GpioController = new GpioController();
 
+            //test buzzer with tunes class
+            //BuzzerTunes tune = new BuzzerTunes(nanoFramework.Hardware.Esp32.Gpio.IO16);
+            //tune.PlaySound();
+            //tune.Dispose();
+
             //test led
             Thread thLed = new Thread(new ThreadStart(TestLed));
             thLed.Start();
@@ -50,6 +56,8 @@ namespace BluinoApp
             //test buzzer
             Thread thBuz = new Thread(new ThreadStart(TestBuzzer));
             thBuz.Start();
+
+           
 
             //test button and relay
             var relay = s_GpioController.OpenPin(nanoFramework.Hardware.Esp32.Gpio.IO12, PinMode.Output);
@@ -105,5 +113,78 @@ namespace BluinoApp
                 Thread.Sleep(525);
             }
         }
+
+        #region Tunes
+
+        public class BuzzerTunes:IDisposable
+        {
+            Tunes tunes;
+            ArrayList music = new ArrayList();
+            public BuzzerTunes(int pinNumber)
+            {
+                tunes = new Tunes(pinNumber);
+            }
+
+            public void Dispose()
+            {
+                tunes.Dispose();
+            }
+
+            public void PlaySound()
+            {
+                Tunes.MusicNote note = new Tunes.MusicNote(Tunes.Tone.C4, 400);
+
+                music.Add(note);
+
+                //up
+                PlayNote(Tunes.Tone.C4);
+                PlayNote(Tunes.Tone.D4);
+                PlayNote(Tunes.Tone.E4);
+                PlayNote(Tunes.Tone.F4);
+                PlayNote(Tunes.Tone.G4);
+                PlayNote(Tunes.Tone.A4);
+                PlayNote(Tunes.Tone.B4);
+                PlayNote(Tunes.Tone.C5);
+
+                // back down
+                PlayNote(Tunes.Tone.B4);
+                PlayNote(Tunes.Tone.A4);
+                PlayNote(Tunes.Tone.G4);
+                PlayNote(Tunes.Tone.F4);
+                PlayNote(Tunes.Tone.E4);
+                PlayNote(Tunes.Tone.D4);
+                PlayNote(Tunes.Tone.C4);
+
+                // arpeggio
+                PlayNote(Tunes.Tone.E4);
+                PlayNote(Tunes.Tone.G4);
+                PlayNote(Tunes.Tone.C5);
+                PlayNote(Tunes.Tone.G4);
+                PlayNote(Tunes.Tone.E4);
+                PlayNote(Tunes.Tone.C4);
+
+                //tunes.Play();
+
+                //Thread.Sleep(100);
+
+                PlayNote(Tunes.Tone.E4);
+                PlayNote(Tunes.Tone.G4);
+                PlayNote(Tunes.Tone.C5);
+                PlayNote(Tunes.Tone.G4);
+                PlayNote(Tunes.Tone.E4);
+                PlayNote(Tunes.Tone.C4);
+                var notes = (Tunes.MusicNote[])music.ToArray(typeof(Tunes.MusicNote));
+                tunes.Play(notes);
+
+            }
+            void PlayNote(Tunes.Tone tone)
+            {
+                Tunes.MusicNote note = new Tunes.MusicNote(tone, 200);
+
+                music.Add(note);
+            }
+        }
+        
+        #endregion
     }
 }

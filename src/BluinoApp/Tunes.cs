@@ -4,7 +4,7 @@ using System.Threading;
 using Windows.Devices.Pwm;
 namespace BluinoApp
 {
-    public class Tunes 
+    public class Tunes :IDisposable
     {
         private PwmPin pwm;
         private Queue playlist;
@@ -97,7 +97,8 @@ namespace BluinoApp
                 lock (this.syncRoot)
                     this.playlist.Clear();
 
-                this.worker.Join(250);
+                if(this.worker != null)
+                    this.worker.Join(250);
 
                 if (this.worker != null && this.worker.IsAlive)
                     this.worker.Abort();
@@ -138,6 +139,15 @@ namespace BluinoApp
             this.pwm.SetActiveDutyCyclePercentage(0.0001);
            
         }
+
+        public void Dispose()
+        {
+            this.Stop();
+            this.playlist.Clear();
+            this.worker = null;
+            this.pwm.Dispose();
+        }
+
         /// <summary>Represents a list of notes to play in sequence.</summary>
         public class Melody
         {
