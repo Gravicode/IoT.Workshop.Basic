@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gadgeteer;
+using System;
 using System.Device.I2c;
 
 namespace nanoFramework.ITG3200

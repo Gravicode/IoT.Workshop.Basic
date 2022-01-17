@@ -8,28 +8,31 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>cae237e4-aea3-48f1-86b3-be9bd8c4628d</ProjectGuid>
+    <ProjectGuid>d5795142-c36f-437d-ae47-d9eac42b02f5</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>nanoFramework.ITG3200</RootNamespace>
-    <AssemblyName>nanoFramework.ITG3200</AssemblyName>
+    <RootNamespace>nanoFramework.EM4100</RootNamespace>
+    <AssemblyName>nanoFramework.EM4100</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="Gyro.cs" />
+    <Compile Include="RFIDReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.System.Collections">
-      <HintPath>..\packages\nanoFramework.System.Collections.1.2.0\lib\nanoFramework.System.Collections.dll</HintPath>
+    <Reference Include="nanoFramework.Runtime.Events">
+      <HintPath>..\packages\nanoFramework.Runtime.Events.1.9.1\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
-    <Reference Include="System.Device.I2c">
-      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.1\lib\System.Device.I2c.dll</HintPath>
+    <Reference Include="nanoFramework.System.Text">
+      <HintPath>..\packages\nanoFramework.System.Text.1.1.1\lib\nanoFramework.System.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Ports">
+      <HintPath>..\packages\nanoFramework.System.IO.Ports.1.0.0\lib\System.IO.Ports.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

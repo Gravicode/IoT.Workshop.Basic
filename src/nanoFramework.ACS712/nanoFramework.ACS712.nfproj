@@ -8,35 +8,32 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>cae237e4-aea3-48f1-86b3-be9bd8c4628d</ProjectGuid>
+    <ProjectGuid>6c441d2c-c9e0-45e6-8f27-86e20f0efbb8</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>nanoFramework.ITG3200</RootNamespace>
-    <AssemblyName>nanoFramework.ITG3200</AssemblyName>
+    <RootNamespace>nanoFramework.ACS712</RootNamespace>
+    <AssemblyName>nanoFramework.ACS712</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="Gyro.cs" />
+    <Compile Include="ACS712.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
       <HintPath>..\packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.System.Collections">
-      <HintPath>..\packages\nanoFramework.System.Collections.1.2.0\lib\nanoFramework.System.Collections.dll</HintPath>
+    <Reference Include="System.Math">
+      <HintPath>..\packages\nanoFramework.System.Math.1.4.1\lib\System.Math.dll</HintPath>
     </Reference>
-    <Reference Include="System.Device.I2c">
-      <HintPath>..\packages\nanoFramework.System.Device.I2c.1.0.1\lib\System.Device.I2c.dll</HintPath>
+    <Reference Include="Windows.Devices.Adc">
+      <HintPath>..\packages\nanoFramework.Windows.Devices.Adc.1.5.1\lib\Windows.Devices.Adc.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Gadgeteer\Gadgeteer.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

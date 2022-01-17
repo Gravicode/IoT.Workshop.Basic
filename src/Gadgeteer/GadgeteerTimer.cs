@@ -3,7 +3,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Threading;
 
-namespace nanoFramework.ITG3200
+namespace Gadgeteer
 {
     /// <summary>
     /// Provides a timer to enable periodic status checks or actions, or a one-off stopwatch.
@@ -101,14 +101,14 @@ namespace nanoFramework.ITG3200
         /// </remarks>
         public void Start()
         {
-            
+
             if (!activeTimers.Contains(this))
             {
                 activeTimers.Add(this, null);
                 //Debug.WriteLine("Added reference to active timer with interval " + Interval);
             }
 
-            this.IsRunning = true; 
+            this.IsRunning = true;
         }
 
         /// <summary>
@@ -144,12 +144,15 @@ namespace nanoFramework.ITG3200
         /// Gets the interval that was assigned to this timer.
         /// </summary>
         TimeSpan _Interval;
-        public TimeSpan Interval { 
-            set { 
+        public TimeSpan Interval
+        {
+            set
+            {
                 this._Interval = value;
                 this.dt.Change(new TimeSpan(0, 0, 0), _Interval);
-            } 
-            get { return _Interval; } }
+            }
+            get { return _Interval; }
+        }
 
         /// <summary>
         /// Represents the delegate that is used for the <see cref="Tick"/> event.
@@ -175,6 +178,6 @@ namespace nanoFramework.ITG3200
             return this.dt.GetHashCode();
         }
 
-        
+
     }
 }
