@@ -1,0 +1,6 @@
+10 A = 0
+20 IF A <= 8 THEN 40
+30 END
+40 ? "FRODO LIVES ";A
+50 A = A + 2
+60 GOTO 20

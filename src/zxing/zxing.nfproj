@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>98d63266-177d-425d-9faf-c59d4d77f8af</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>zxing</RootNamespace>
+    <AssemblyName>zxing</AssemblyName>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <ItemGroup>
+    <Compile Include="BarcodeFormat.cs" />
+    <Compile Include="BarcodeReader.cs" />
+    <Compile Include="BaseLuminanceSource.cs" />
+    <Compile Include="Binarizer.cs" />
+    <Compile Include="BinaryBitmap.cs" />
+    <Compile Include="Colors.cs" />
+    <Compile Include="common\BitArray.cs" />
+    <Compile Include="common\BitMatrix.cs" />
+    <Compile Include="common\BitMatrix.Drawing.cs" />
+    <Compile Include="common\BitSource.cs" />
+    <Compile Include="common\CharacterSetECI.cs" />
+    <Compile Include="common\DecoderResult.cs" />
+    <Compile Include="common\DefaultGridSampler.cs" />
+    <Compile Include="common\DetectorResult.cs" />
+    <Compile Include="common\detector\MathUtils.cs" />
+    <Compile Include="common\detector\MonochromeRectangleDetector.cs" />
+    <Compile Include="common\detector\WhiteRectangleDetector.cs" />
+    <Compile Include="common\ECI.cs" />
+    <Compile Include="common\GlobalHistogramBinarizer.cs" />
+    <Compile Include="common\GridSampler.cs" />
+    <Compile Include="common\HybridBinarizer.cs" />
+    <Compile Include="common\PerspectiveTransform.cs" />
+    <Compile Include="common\reedsolomon\GenericGF.cs" />
+    <Compile Include="common\reedsolomon\GenericGFPoly.cs" />
+    <Compile Include="common\reedsolomon\ReedSolomonDecoder.cs" />
+    <Compile Include="common\reedsolomon\ReedSolomonEncoder.cs" />
+    <Compile Include="common\StringUtils.cs" />
+    <Compile Include="datamatrix\DataMatrixReader.cs" />
+    <Compile Include="datamatrix\decoder\BitMatrixParser.cs" />
+    <Compile Include="datamatrix\decoder\DataBlock.cs" />
+    <Compile Include="datamatrix\decoder\DecodedBitStreamParser.cs" />
+    <Compile Include="datamatrix\decoder\Decoder.cs" />
+    <Compile Include="datamatrix\decoder\Version.cs" />
+    <Compile Include="datamatrix\detector\Detector.cs" />
+    <Compile Include="DecodeHintType.cs" />
+    <Compile Include="EncodeHintType.cs" />
+    <Compile Include="FormatException.cs" />
+    <Compile Include="helpers\ColorUtility.cs" />
+    <Compile Include="IBarcodeReader.cs" />
+    <Compile Include="LuminanceSource.cs" />
+    <Compile Include="micro\NullableDateTime.cs" />
+    <Compile Include="micro\NullableFloat.cs" />
+    <Compile Include="micro\NullableInt.cs" />
+    <Compile Include="NotFoundException.cs" />
+    <Compile Include="PlanarYUVLuminanceSource.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="qrcode\decoder\BitMatrixParser.cs" />
+    <Compile Include="qrcode\decoder\DataBlock.cs" />
+    <Compile Include="qrcode\decoder\DataMask.cs" />
+    <Compile Include="qrcode\decoder\DecodedBitStreamParser.cs" />
+    <Compile Include="qrcode\decoder\Decoder.cs" />
+    <Compile Include="qrcode\decoder\ErrorCorrectionLevel.cs" />
+    <Compile Include="qrcode\decoder\FormatInformation.cs" />
+    <Compile Include="qrcode\decoder\Mode.cs" />
+    <Compile Include="qrcode\decoder\Version.cs" />
+    <Compile Include="qrcode\detector\AlignmentPattern.cs" />
+    <Compile Include="qrcode\detector\AlignmentPatternFinder.cs" />
+    <Compile Include="qrcode\detector\Detector.cs" />
+    <Compile Include="qrcode\detector\FinderPattern.cs" />
+    <Compile Include="qrcode\detector\FinderPatternFinder.cs" />
+    <Compile Include="qrcode\detector\FinderPatternInfo.cs" />
+    <Compile Include="qrcode\encoder\BlockPair.cs" />
+    <Compile Include="qrcode\encoder\ByteMatrix.cs" />
+    <Compile Include="qrcode\encoder\Encoder.cs" />
+    <Compile Include="qrcode\encoder\MaskUtil.cs" />
+    <Compile Include="qrcode\encoder\MatrixUtil.cs" />
+    <Compile Include="qrcode\encoder\QRCode.cs" />
+    <Compile Include="qrcode\QRCodeReader.cs" />
+    <Compile Include="qrcode\QRCodeWriter.cs" />
+    <Compile Include="Reader.cs" />
+    <Compile Include="ReaderException.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Result.cs" />
+    <Compile Include="ResultMetadataType.cs" />
+    <Compile Include="ResultPoint.cs" />
+    <Compile Include="ResultPointCallback.cs" />
+    <Compile Include="RGB565LuminanceSource.cs" />
+    <Compile Include="RGBLuminanceSource.cs" />
+    <Compile Include="RGBLuminanceSource.Drawing.cs" />
+    <Compile Include="SupportClass.cs" />
+    <Compile Include="Writer.cs" />
+    <Compile Include="WriterException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>..\packages\nanoFramework.CoreLibrary.1.11.7\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Graphics">
+      <HintPath>..\packages\nanoFramework.Graphics.1.0.0\lib\nanoFramework.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.ResourceManager">
+      <HintPath>..\packages\nanoFramework.ResourceManager.1.1.2\lib\nanoFramework.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Events">
+      <HintPath>..\packages\nanoFramework.Runtime.Events.1.9.1\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Native">
+      <HintPath>..\packages\nanoFramework.Runtime.Native.1.5.1\lib\nanoFramework.Runtime.Native.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Collections">
+      <HintPath>..\packages\nanoFramework.System.Collections.1.2.0\lib\nanoFramework.System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Text">
+      <HintPath>..\packages\nanoFramework.System.Text.1.1.1\lib\nanoFramework.System.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Math">
+      <HintPath>..\packages\nanoFramework.System.Math.1.4.1\lib\System.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.RegularExpressions">
+      <HintPath>..\packages\nanoFramework.System.Text.RegularExpressions.1.0.3\lib\System.Text.RegularExpressions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\small.tinyfnt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>nFResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <ProjectExtensions>
+    <ProjectCapabilities>
+      <ProjectConfigurationsDeclaredAsItems />
+    </ProjectCapabilities>
+  </ProjectExtensions>
+</Project>
