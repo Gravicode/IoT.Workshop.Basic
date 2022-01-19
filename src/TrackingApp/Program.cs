@@ -1,3 +1,4 @@
+using nanoFramework.Hardware.Esp32;
 using System;
 using System.Diagnostics;
 using System.IO.Ports;
@@ -20,8 +21,11 @@ namespace TrackingApp
         public static void StartGPS()
         {
             //Lcd.BacklightBrightness = 100;
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO16, DeviceFunction.COM2_RX);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO17, DeviceFunction.COM2_TX);
 
-            SerialPort serialPort = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
+            
+            SerialPort serialPort = new SerialPort("COM2", 9600, Parity.None, 8, StopBits.One);
 
             //OutputPort powerPin = new OutputPort(Pins.GPIO_PIN_D2, false);
 
