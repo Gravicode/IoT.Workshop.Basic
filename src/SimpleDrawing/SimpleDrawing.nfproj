@@ -66,7 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicGraphics\BasicGraphics.nfproj" />
-    <ProjectReference Include="..\nanoFramework.SSD1306B\nanoFramework.SSD1306B.nfproj" />
+    <ProjectReference Include="..\nanoFramework.SSD1306\nanoFramework.SSD1306.nfproj" />
     <ProjectReference Include="..\nanoFramework.ST7735\nanoFramework.ST7735.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />

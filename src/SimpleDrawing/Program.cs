@@ -1,5 +1,7 @@
 using BMC.Drivers.BasicGraphics;
-using nanoFramework.SSD1306B;
+using nanoFramework.Hardware.Esp32;
+//using nanoFramework.SSD1306B;
+using SolomonSystech.SSD1306;
 //using nanoFramework.UI;
 using System;
 using System.Device.Gpio;
@@ -22,8 +24,6 @@ namespace SimpleDrawing
             
             //demossd1306
             DemoSSD1306();
-
-            Thread.Sleep(Timeout.Infinite);
 
             // Browse our samples repository: https://github.com/nanoframework/samples
             // Check our documentation online: https://docs.nanoframework.net/
@@ -84,6 +84,10 @@ namespace SimpleDrawing
         } 
         static void DemoSSD1306()
         {
+            //for ESP 32
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO22, DeviceFunction.I2C1_CLOCK);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO21, DeviceFunction.I2C1_DATA);
+
             var basicGfx = new SSD1306Imp();
             var colorBlue = BasicGraphics.ColorFromRgb(0, 0, 255);
             var colorGreen = BasicGraphics.ColorFromRgb(0, 255, 0);
@@ -91,20 +95,20 @@ namespace SimpleDrawing
             //var colorWhite = BasicGraphics.ColorFromRgb(255, 255, 255);
 
             basicGfx.Clear();
-            basicGfx.DrawString("NanoFramework", colorGreen, 1, 10, 1, 1);
+            basicGfx.DrawString("NanoFramework", colorGreen, 1, 1, 1, 1);
             basicGfx.DrawString("Kick Ass", colorBlue, 1, 20, 1, 1);
-            basicGfx.DrawString("--BMC--", colorRed, 1, 30, 1, 1);
+            basicGfx.DrawString("--BMC--", colorRed, 1, 40, 1, 1);
 
             Random color = new Random();
             for (var i = 10; i < 100; i++)
-                basicGfx.DrawCircle((uint)color.Next(), i, 40, 2);
+                basicGfx.DrawCircle((uint)color.Next(), i, 60, 2);
 
             basicGfx.Flush();
 
             Thread.Sleep(3000);
             //bounching balls demo
             var balls = new BouncingBalls(basicGfx);
-            Thread.Sleep(500);
+            Thread.Sleep(Timeout.Infinite);
 
         }
     }
@@ -178,33 +182,42 @@ namespace SimpleDrawing
     public class SSD1306Imp : BasicGraphics, IDisposable
     {
 
-        SSD1306 screen;
+        //SSD1306 screen;
+        SSD1306Controller screen;
         public SSD1306Imp():base(128,64,ColorFormat.OneBpp)
         {
-
-            screen = new SSD1306("I2C1",128, 64, 0x3C);
-            screen.SetEntireDisplayON(true);
-            screen.Init();
-            screen.Clear();
+            var con = SSD1306Controller.GetConnectionSettings();
+            I2cDevice dev = new I2cDevice(con);
+            screen = new SSD1306Controller(dev); //new SSD1306("I2C1",128, 64, 0x3C);
+            //screen.SetEntireDisplayON(true);
+            //screen.Init();
+            //screen.Clear();
             //this.Width = screen.Width;
             //this.Height = screen.Height;
             
+        }
+        /*
+        public override void Clear()
+        {
+            screen.Clear();
+            // add optional clear if buffer is used
         }
         public override void SetPixel(int x, int y, uint color)
         {
             screen.DrawPixel(x,y,true);
             // add code to buffer pixels or send directly to display
-        }
+        }*/
 
         // You may need to add this to send an optional buffer...
         public void Flush()
         {
-            screen.Display();
+            screen.DrawBufferNative(this.Buffer);
             //do nothing
         }
 
         public void Dispose()
         {
+            screen.Dispose();
             //do nothing
         }
     }
@@ -230,17 +243,37 @@ namespace SimpleDrawing
         private Point[] BallVelocity;
         private BasicGraphics Screen { get; set; }
 
-        public BouncingBalls(BasicGraphics fullScreen)
+        public BouncingBalls(SSD1306Imp fullScreen)
         {
             Screen = fullScreen;
             SetupBalls();
+            looping = new Thread(new ThreadStart(Loop));
+            looping.Start();
+            
+        }
+        public BouncingBalls(ST7735Imp fullScreen)
+        {
+            Screen = fullScreen;
+            SetupBalls();
+            looping = new Thread(new ThreadStart(Loop));
+            looping.Start();
 
-            for (int iCount = 0; iCount < 180; iCount++)
+        }
+
+        Thread looping;
+        void Loop()
+        {
+            while (true)
             {
+                
                 MoveBalls();
                 DrawBalls();
+                if (Screen is SimpleDrawing.SSD1306Imp)
+                    ((SSD1306Imp)Screen).Flush();
+                else
+                    ((ST7735Imp)Screen).Flush();
+                Thread.Sleep(1);
             }
-
         }
 
         private void SetupBalls()
@@ -255,26 +288,27 @@ namespace SimpleDrawing
 
             for (int iBall = 0; iBall < num_balls; iBall++)
             {
-                int width = rand.Next(3, 50);
+                int width = rand.Next(4, 10);
                 BallLocation[iBall] = new Rectangle
                 {
-                    X = rand.Next(0, Screen.Width -  width),
-                    Y = rand.Next(0, Screen.Height -  width),
+                    X = 1+rand.Next(Screen.Width-11),
+                    Y = 1+rand.Next(Screen.Height-11),
                     Width = width,
                     Height = width
                 };
                 // Setup 1/2 the balls with different speeds
+                
                 if (iBall % 2 == 0)
                 {
-                    vx = rand.Next(1, 2);
-                    vy = rand.Next(1, 2);
+                    vx = rand.Next(1, 5);
+                    vy = rand.Next(1, 5);
                 }
                 else
                 {
-                    vx = rand.Next(1, 2);
-                    vy = rand.Next(1, 2);
+                    vx = rand.Next(6, 10);
+                    vy = rand.Next(6, 10);
                 }
-
+                
                 // Setup random directions
                 if (rand.Next(0, 2) == 0) vx = -vx;
                 if (rand.Next(0, 2) == 0) vy = -vy;
@@ -293,32 +327,37 @@ namespace SimpleDrawing
                     BallVelocity[ball_num].X;
                 int new_y = BallLocation[ball_num].Y +
                     BallVelocity[ball_num].Y;
-                if (new_x < 0)
+                if (new_x <= 1)
                 {
                     BallVelocity[ball_num].X = -BallVelocity[ball_num].X;
                 }
-                else if (new_x + BallLocation[ball_num].Width > Screen.Width)
+                else if (new_x + BallLocation[ball_num].Width >= Screen.Width-1)
                 {
                     BallVelocity[ball_num].X = -BallVelocity[ball_num].X;
                 }
-                if (new_y < 0)
+                if (new_y <= 1)
                 {
                     BallVelocity[ball_num].Y = -BallVelocity[ball_num].Y;
                 }
-                else if (new_y + BallLocation[ball_num].Height > Screen.Height)
+                else if (new_y + BallLocation[ball_num].Height >= Screen.Height-1)
                 {
                     BallVelocity[ball_num].Y = -BallVelocity[ball_num].Y;
                 }
 
-                BallLocation[ball_num] = new Rectangle(new_x, new_y,
+                BallLocation[ball_num].X = new_x;
+                BallLocation[ball_num].Y = new_y;
+                /*
+                = new Rectangle(new_x, new_y,
                                                        BallLocation[ball_num].Width,
                                                        BallLocation[ball_num].Height);
+                */
             }
         }
 
         private void DrawBalls()
         {
             Screen.Clear();
+
             for (int i = 0; i < BallLocation.Length; i++)
             {
                 //teal
