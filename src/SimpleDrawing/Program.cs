@@ -1,5 +1,6 @@
 using BMC.Drivers.BasicGraphics;
-using nanoFramework.UI;
+using nanoFramework.SSD1306B;
+//using nanoFramework.UI;
 using System;
 using System.Device.Gpio;
 using System.Device.I2c;
@@ -14,13 +15,13 @@ namespace SimpleDrawing
         public static void Main()
         {
             //demo using internal graphic controller
-            DemoBasic();
+            //DemoBasic();
             
             //demo st7735
             //DemoST7735();
             
             //demossd1306
-            //DemoSSD1306();
+            DemoSSD1306();
 
             Thread.Sleep(Timeout.Infinite);
 
@@ -28,7 +29,7 @@ namespace SimpleDrawing
             // Check our documentation online: https://docs.nanoframework.net/
             // Join our lively Discord community: https://discord.gg/gCyBu8T
         }
-
+        /*
         static void DemoBasic()
         {
             var basicGfx = new BasicGraphicsImp(320, 240);
@@ -53,7 +54,7 @@ namespace SimpleDrawing
             var balls = new BouncingBalls(basicGfx);
             Thread.Sleep(500);
 
-        }
+        }*/
         static void DemoST7735()
         {
             //pin esp32
@@ -90,13 +91,13 @@ namespace SimpleDrawing
             //var colorWhite = BasicGraphics.ColorFromRgb(255, 255, 255);
 
             basicGfx.Clear();
-            basicGfx.DrawString("NanoFramework Kick Ass!", colorGreen, 15, 15, 2, 1);
-            basicGfx.DrawString("BMC Training", colorBlue, 35, 40, 2, 2);
-            basicGfx.DrawString("ESP32 - STM32F4", colorRed, 35, 60, 2, 2);
+            basicGfx.DrawString("NanoFramework", colorGreen, 1, 10, 1, 1);
+            basicGfx.DrawString("Kick Ass", colorBlue, 1, 20, 1, 1);
+            basicGfx.DrawString("--BMC--", colorRed, 1, 30, 1, 1);
 
             Random color = new Random();
-            for (var i = 20; i < 140; i++)
-                basicGfx.DrawCircle((uint)color.Next(), i, 100, 15);
+            for (var i = 10; i < 100; i++)
+                basicGfx.DrawCircle((uint)color.Next(), i, 40, 2);
 
             basicGfx.Flush();
 
@@ -107,7 +108,7 @@ namespace SimpleDrawing
 
         }
     }
-
+    /*
     public class BasicGraphicsImp : BasicGraphics, IDisposable
     {
         private Bitmap screen;
@@ -140,7 +141,7 @@ namespace SimpleDrawing
         {
             screen.Dispose();
         }
-    }
+    }*/
     public class ST7735Imp : BasicGraphics, IDisposable
     {
         
@@ -177,26 +178,34 @@ namespace SimpleDrawing
     public class SSD1306Imp : BasicGraphics, IDisposable
     {
 
-        SolomonSystech.SSD1306.SSD1306Controller screen;
-        public SSD1306Imp()
+        SSD1306 screen;
+        public SSD1306Imp():base(128,64,ColorFormat.OneBpp)
         {
-            var i2cConn = SolomonSystech.SSD1306.SSD1306Controller.GetConnectionSettings();
-            I2cDevice i2c = new I2cDevice(i2cConn);
-            screen = new SolomonSystech.SSD1306.SSD1306Controller(i2c);
-            this.Width = screen.Width;
-            this.Height = screen.Height;
+
+            screen = new SSD1306("I2C1",128, 64, 0x3C);
+            screen.SetEntireDisplayON(true);
+            screen.Init();
+            screen.Clear();
+            //this.Width = screen.Width;
+            //this.Height = screen.Height;
             
+        }
+        public override void SetPixel(int x, int y, uint color)
+        {
+            screen.DrawPixel(x,y,true);
+            // add code to buffer pixels or send directly to display
         }
 
         // You may need to add this to send an optional buffer...
         public void Flush()
         {
-            screen.DrawBufferNative(this.Buffer);
+            screen.Display();
+            //do nothing
         }
 
         public void Dispose()
         {
-            screen.Dispose();
+            //do nothing
         }
     }
     public class BouncingBalls
@@ -249,21 +258,21 @@ namespace SimpleDrawing
                 int width = rand.Next(3, 50);
                 BallLocation[iBall] = new Rectangle
                 {
-                    X = rand.Next(0, Screen.Width - 2 * width),
-                    Y = rand.Next(0, Screen.Height - 2 * width),
+                    X = rand.Next(0, Screen.Width -  width),
+                    Y = rand.Next(0, Screen.Height -  width),
                     Width = width,
                     Height = width
                 };
                 // Setup 1/2 the balls with different speeds
                 if (iBall % 2 == 0)
                 {
-                    vx = rand.Next(2, 10);
-                    vy = rand.Next(2, 10);
+                    vx = rand.Next(1, 2);
+                    vy = rand.Next(1, 2);
                 }
                 else
                 {
-                    vx = rand.Next(12, 25);
-                    vy = rand.Next(12, 25);
+                    vx = rand.Next(1, 2);
+                    vy = rand.Next(1, 2);
                 }
 
                 // Setup random directions
@@ -312,7 +321,8 @@ namespace SimpleDrawing
             Screen.Clear();
             for (int i = 0; i < BallLocation.Length; i++)
             {
-                Screen.DrawCircle((uint)nanoFramework.Presentation.Media.Color.Yellow, BallLocation[i].X, BallLocation[i].Y, BallLocation[i].Height/2);
+                //teal
+                Screen.DrawCircle((uint)8421376, BallLocation[i].X, BallLocation[i].Y, BallLocation[i].Height/2);
             }
             //Screen.Flush();
         }

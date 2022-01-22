@@ -237,6 +237,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reflector", "Reflector", "{
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "nanoFramework.TCRT5000", "nanoFramework.TCRT5000\nanoFramework.TCRT5000.nfproj", "{B32A69E8-6944-448D-9CC6-F4A0008F614B}"
 EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "nanoFramework.SSD1306B", "nanoFramework.SSD1306B\nanoFramework.SSD1306B.nfproj", "{35DB2388-DB5B-4290-9D92-AC72451DC066}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -621,6 +623,12 @@ Global
 		{B32A69E8-6944-448D-9CC6-F4A0008F614B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B32A69E8-6944-448D-9CC6-F4A0008F614B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B32A69E8-6944-448D-9CC6-F4A0008F614B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{35DB2388-DB5B-4290-9D92-AC72451DC066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35DB2388-DB5B-4290-9D92-AC72451DC066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35DB2388-DB5B-4290-9D92-AC72451DC066}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{35DB2388-DB5B-4290-9D92-AC72451DC066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35DB2388-DB5B-4290-9D92-AC72451DC066}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35DB2388-DB5B-4290-9D92-AC72451DC066}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -739,6 +747,7 @@ Global
 		{176016FB-6208-4B03-9D34-8F41E919962A} = {7AC2BF18-7716-453E-BBDF-0A2B19D1269D}
 		{C59D5C28-1921-4DBE-9AE1-1DDFDFCECBC1} = {18D1FB9A-D071-4FC5-B786-75B53C968AA8}
 		{B32A69E8-6944-448D-9CC6-F4A0008F614B} = {C59D5C28-1921-4DBE-9AE1-1DDFDFCECBC1}
+		{35DB2388-DB5B-4290-9D92-AC72451DC066} = {C3269F19-FF76-4427-9CC6-748871AA330C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {79CCB3B6-1913-45A6-9047-8520D1DD3C8D}
