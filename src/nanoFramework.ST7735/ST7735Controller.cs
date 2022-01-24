@@ -6,6 +6,7 @@
 
 //using GHIElectronics.TinyCLR.Devices.Gpio;
 //using GHIElectronics.TinyCLR.Devices.Spi;
+using nanoFramework.Tools;
 using System;
 using System.Collections;
 using System.Device.Gpio;

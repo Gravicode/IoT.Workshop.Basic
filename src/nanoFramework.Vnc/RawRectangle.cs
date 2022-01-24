@@ -6,6 +6,7 @@
 
 //using GHIElectronics.TinyCLR.Native;
 using nanoFramework.Presentation.Media;
+using nanoFramework.Tools;
 using System;
 //using System.Drawing;
 
@@ -52,7 +53,7 @@ namespace Drivers.Vnc
           break;
       }
       Color.Convert(this.framebuffer.Data, this.data, colorFormat);
-      BitConverter.SwapEndianness(this.data, num);
+      BitConverterHelper.SwapEndianness(this.data, num);
     }
 
     ~RawRectangle() => this.Dispose();

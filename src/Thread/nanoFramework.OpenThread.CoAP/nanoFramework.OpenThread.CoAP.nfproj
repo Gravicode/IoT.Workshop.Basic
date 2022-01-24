@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <PropertyGroup>
+    <DefineConstants>LoWPAN</DefineConstants>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>a0d7f898-0439-44a5-a14a-b3790c1a636c</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>nanoFramework.OpenThread.CoAP</RootNamespace>
+    <AssemblyName>nanoFramework.OpenThread.CoAP</AssemblyName>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <ItemGroup>
+    <Compile Include="Channels\AbstractCoAPChannel.cs" />
+    <Compile Include="Channels\CoAPClientChannel.cs" />
+    <Compile Include="Channels\CoAPServerChannel.cs" />
+    <Compile Include="Channels\CoAPSyncClientChannel.cs" />
+    <Compile Include="Channels\ObserversList.cs" />
+    <Compile Include="Channels\SeparateResponseQueue.cs" />
+    <Compile Include="Channels\TimedQueue.cs" />
+    <Compile Include="Exceptions\CoAPFormatException.cs" />
+    <Compile Include="Exceptions\UndeliveredException.cs" />
+    <Compile Include="Exceptions\UnsupportedException.cs" />
+    <Compile Include="Helpers\AbstractByteUtils.cs" />
+    <Compile Include="Helpers\AbstractLogUtil.cs" />
+    <Compile Include="Helpers\AbstractNetworkUtils.cs" />
+    <Compile Include="Helpers\AbstractNumberUtils.cs" />
+    <Compile Include="Helpers\AbstractStringUtils.cs" />
+    <Compile Include="Helpers\AbstractURIUtils.cs" />
+    <Compile Include="Helpers\DefaultLogger.cs" />
+    <Compile Include="Helpers\JSONResult.cs" />
+    <Compile Include="Helpers\TextResult.cs" />
+    <Compile Include="Message\AbstractCoAPMessage.cs" />
+    <Compile Include="Message\CoAPBlockOption.cs" />
+    <Compile Include="Message\CoAPContentFormatOption.cs" />
+    <Compile Include="Message\CoAPHeaderOption.cs" />
+    <Compile Include="Message\CoAPHeaderOptions.cs" />
+    <Compile Include="Message\CoAPMessageCode.cs" />
+    <Compile Include="Message\CoAPMessageID.cs" />
+    <Compile Include="Message\CoAPMessageType.cs" />
+    <Compile Include="Message\CoAPPayload.cs" />
+    <Compile Include="Message\CoAPRequest.cs" />
+    <Compile Include="Message\CoAPResponse.cs" />
+    <Compile Include="Message\CoAPToken.cs" />
+    <Compile Include="Message\CoAPVersion.cs" />
+    <Compile Include="Message\IParsable.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nanoFramework.OpenThread\nanoFramework.OpenThread.nfproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.10.5\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Collections">
+      <HintPath>..\..\packages\nanoFramework.System.Collections.1.2.0\lib\nanoFramework.System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Text">
+      <HintPath>..\..\packages\nanoFramework.System.Text.1.1.1\lib\nanoFramework.System.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Math">
+      <HintPath>..\..\packages\nanoFramework.System.Math.1.4.1\lib\System.Math.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <ProjectExtensions>
+    <ProjectCapabilities>
+      <ProjectConfigurationsDeclaredAsItems />
+    </ProjectCapabilities>
+  </ProjectExtensions>
+</Project>
