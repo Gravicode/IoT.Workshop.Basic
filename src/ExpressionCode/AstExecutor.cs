@@ -107,7 +107,7 @@ namespace ExpressionCode
         public void LoadBuiltIn(object instance)
         {
             Type type = instance.GetType();
-            foreach (MethodInfo method in type.GetMethods(BindingFlags.Instance | BindingFlags.Public))
+            foreach (MethodInfo method in type.GetMethods(BindingFlags.Instance | BindingFlags.Public))              
                 this.globals.Add(StringTable.Intern(method.Name.ToLower()), (object)new BuiltInDeclAst(instance, method));
             foreach (FieldInfo field in type.GetFields(BindingFlags.Instance | BindingFlags.Public))
                 this.AddConstant(StringTable.Intern(field.Name.ToLower()), field.GetValue(instance));

@@ -10,8 +10,10 @@ using System.Threading;
 
 namespace ThreadDemo
 {
+    //use module: NRF52840
     public class Program
     {
+
         private static string networkname = "OpenThreadNano";
         private static string masterkey = "00112233445566778899aabbccddeeff";
         private static byte channel = 11;

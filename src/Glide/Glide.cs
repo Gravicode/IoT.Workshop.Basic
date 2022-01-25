@@ -53,6 +53,8 @@ namespace GHI.Glide
             Bitmap loading = Resources.GetBitmap(Resources.BinaryResources.loading);
             screen.DrawImage((LCD.Width - loading.Width) / 2, (LCD.Height - loading.Height) / 2, loading, 0, 0, loading.Width, loading.Height);
             screen.Flush();
+            OnFlushEvent?.Invoke(Glide.screen.GetBitmap());
+
         }
 
         /// <summary>
@@ -246,6 +248,10 @@ namespace GHI.Glide
             CloseList();
         }
 
+        public delegate void OnFlushHandler(byte[] data);
+
+        static public event OnFlushHandler OnFlushEvent;
+
         /// <summary>
         /// Flushes specified area to the screen.
         /// </summary>
@@ -265,7 +271,10 @@ namespace GHI.Glide
 
             // Object must be partially visible so flushing doesn't error.
             if (_mainWindow.Rect.Contains(x, offsetY, width, height))
+            {
                 Glide.screen.Flush(x, offsetY, width, height);
+                OnFlushEvent?.Invoke(Glide.screen.GetBitmap());
+            }
         }
 
         /// <summary>

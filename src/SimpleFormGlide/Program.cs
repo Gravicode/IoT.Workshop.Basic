@@ -1,5 +1,8 @@
 using GHI.Glide;
 using GHI.Glide.Display;
+using nanoFramework.Hardware.Esp32;
+using nanoFramework.UI;
+using nanoFramework.UI.Input;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -21,6 +24,30 @@ namespace SimpleFormGlide
 
         private static void TestGlide()
         {
+            //use only for latest library version
+            #region ESP32
+            //int backLightPin = 32;
+            //int chipSelect = 14;
+            //int dataCommand = 27;
+            //int reset = 33;
+            //// Add the nanoFramework.Hardware.Esp32 to the solution
+            //Configuration.SetPinFunction(19, DeviceFunction.SPI1_MISO);
+            //Configuration.SetPinFunction(23, DeviceFunction.SPI1_MOSI);
+            //Configuration.SetPinFunction(18, DeviceFunction.SPI1_CLOCK);
+            // Adjust as well the size of your screen and the position of the screen on the driver
+            //DisplayControl.Initialize(new SpiConfiguration(1, chipSelect, dataCommand, reset, backLightPin), new ScreenConfiguration(0, 0, 320, 240));
+            
+            // Depending on you ESP32, you may also have to use either PWM either GPIO to set the backlight pin mode on
+            // GpioController.OpenPin(backLightPin, PinMode.Output);
+            // GpioController.Write(backLightPin, PinValue.High);
+            // Assign GPIO / Key functions to GPIOButtonInputProvider
+            // Esp32
+            //inputProvider.AddButton(12, Button.VK_LEFT, true);
+            //inputProvider.AddButton(13, Button.VK_RIGHT, true);
+            //inputProvider.AddButton(34, Button.VK_UP, true);
+            //inputProvider.AddButton(35, Button.VK_SELECT, true);
+            //inputProvider.AddButton(36, Button.VK_DOWN, true);
+            #endregion
             //verify the interupt pin for lcd touch controller
             var touch = new TouchController(nanoFramework.Hardware.Esp32.Gpio.IO13);
 
@@ -76,7 +103,7 @@ namespace SimpleFormGlide
         private static void Lcd_CapacitiveScreenMove(object sender, TouchController.TouchEventArgs e)
         {
             Debug.WriteLine("you move finger on the lcd at X:" + e.X + " ,Y:" + e.Y);
-            GlideTouch.RaiseTouchMoveEvent(sender, new TouchEventArgs(new GHI.Glide.Geom.Point(e.X, e.Y)));
+            GlideTouch.RaiseTouchMoveEvent(sender, new GHI.Glide.TouchEventArgs(new GHI.Glide.Geom.Point(e.X, e.Y)));
         }
         #endregion
     }
