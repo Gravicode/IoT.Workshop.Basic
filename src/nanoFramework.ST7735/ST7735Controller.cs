@@ -60,12 +60,12 @@ namespace Sitronix.ST7735
 
         public static SpiConnectionSettings GetConnectionSettings(
           PinValue chipSelectType,
-          GpioPin chipSelectLine)
+          int chipSelectLine)
         {
-            var con = new SpiConnectionSettings(1, chipSelectLine.PinNumber);
+            var con = new SpiConnectionSettings(1, chipSelectLine);
 
-            con.Mode = SpiMode.Mode3;
-            con.ClockFrequency = 12000000;
+            con.Mode = SpiMode.Mode3;// Mode3;
+            con.ClockFrequency = 12000000;//12000000
             con.ChipSelectLineActiveState = chipSelectType;
             //ChipSelectLine = chipSelectLine
             return con;

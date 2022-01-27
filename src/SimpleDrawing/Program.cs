@@ -20,10 +20,10 @@ namespace SimpleDrawing
             //DemoBasic();
             
             //demo st7735
-            //DemoST7735();
+            DemoST7735();
             
             //demossd1306
-            DemoSSD1306();
+            //DemoSSD1306();
 
             // Browse our samples repository: https://github.com/nanoframework/samples
             // Check our documentation online: https://docs.nanoframework.net/
@@ -51,30 +51,33 @@ namespace SimpleDrawing
 
             Thread.Sleep(3000);
             //bounching balls demo
-            var balls = new BouncingBalls(basicGfx);
-            Thread.Sleep(500);
+            //var balls = new BouncingBalls(basicGfx);
+            //Thread.Sleep(500);
 
         }*/
         static void DemoST7735()
         {
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO23, DeviceFunction.SPI1_MOSI);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO18, DeviceFunction.SPI1_CLOCK);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO19, DeviceFunction.SPI1_MISO);
             //pin esp32
-            //cs = 16, control = 17, reset = 23
-            var basicGfx = new ST7735Imp(Sitronix.ST7735.ScreenSize._160x128,nanoFramework.Hardware.Esp32.Gpio.IO16, nanoFramework.Hardware.Esp32.Gpio.IO17, nanoFramework.Hardware.Esp32.Gpio.IO23);
+            //cs = 13, control = 12, reset = 14
+            var basicGfx = new ST7735Imp(Sitronix.ST7735.ScreenSize._160x128,nanoFramework.Hardware.Esp32.Gpio.IO13, nanoFramework.Hardware.Esp32.Gpio.IO12, nanoFramework.Hardware.Esp32.Gpio.IO14,160,128);
             var colorBlue = BasicGraphics.ColorFromRgb(0, 0, 255);
             var colorGreen = BasicGraphics.ColorFromRgb(0, 255, 0);
             var colorRed = BasicGraphics.ColorFromRgb(255, 0, 0);
             //var colorWhite = BasicGraphics.ColorFromRgb(255, 255, 255);
 
             basicGfx.Clear();
-            basicGfx.DrawString("NanoFramework Kick Ass!", colorGreen, 15, 15, 2, 1);
-            basicGfx.DrawString("BMC Training", colorBlue, 35, 40, 2, 2);
-            basicGfx.DrawString("ESP32 - STM32F4", colorRed, 35, 60, 2, 2);
+            basicGfx.DrawString("NanoFramework Kick Ass!", colorGreen, 15, 15, 1, 1);
+            basicGfx.DrawString("BMC Training", colorBlue, 35, 40, 1, 1);
+            basicGfx.DrawString("ESP32 - STM32F4", colorRed, 35, 60, 1, 1);
 
             Random color = new Random();
-            for (var i = 20; i < 140; i++)
-                basicGfx.DrawCircle((uint)color.Next(), i, 100, 15);
+            for (var i = 1; i < 100; i++)
+                basicGfx.DrawCircle((uint)color.Next(), i, 80, 5);
 
-            basicGfx.Flush();
+            //basicGfx.Flush();
 
             Thread.Sleep(3000);
             //bounching balls demo
@@ -112,6 +115,7 @@ namespace SimpleDrawing
 
         }
     }
+    
     /*
     public class BasicGraphicsImp : BasicGraphics, IDisposable
     {
@@ -150,28 +154,56 @@ namespace SimpleDrawing
     {
         
         Sitronix.ST7735.ST7735Controller screen;
-        public ST7735Imp(Sitronix.ST7735.ScreenSize screenSize, int CSPinNumber, int PinControl, int PinReset)
+        //ST7735 screen;
+        public ST7735Imp(Sitronix.ST7735.ScreenSize screenSize, int CSPinNumber, int PinControl, int PinReset,uint ScreenWidth,uint ScreenHeight):base(ScreenWidth,ScreenHeight,ColorFormat.Rgb565)
         {
-            var gpio = new GpioController();
-            var pinCS = gpio.OpenPin(CSPinNumber,PinMode.Output);
-            var pinControl = gpio.OpenPin(PinControl,PinMode.Output);
-            var pinReset = gpio.OpenPin(PinReset,PinMode.Output);
 
-            var spiConn = Sitronix.ST7735.ST7735Controller.GetConnectionSettings(PinValue.High,pinCS);
-            SpiDevice spi = new SpiDevice(spiConn);
-            screen = new Sitronix.ST7735.ST7735Controller(spi, pinControl, pinReset, screenSize);
-            this.Width = screen.Width;
-            this.Height = screen.Height;
-            screen.SetDataAccessControl(true, true, false, false); //Rotate the screen.
-            screen.SetDrawWindow(0, 0, Width, Height);
-            screen.Enable();
+
+            var gpio = new GpioController();
+            //var pinCS = gpio.OpenPin(CSPinNumber, PinMode.Output);
+            var pinControl = gpio.OpenPin(PinControl, PinMode.Output);
+            var pinReset = gpio.OpenPin(PinReset, PinMode.Output);
+
+            //pinControl.Write(PinValue.Low);
+            //pinCS.Write(PinValue.Low);
+
+            var spiConn = Sitronix.ST7735.ST7735Controller.GetConnectionSettings(PinValue.Low, CSPinNumber);
+            //var spiConn = ST7735.GetConnectionSettings(PinValue.Low, CSPinNumber);
+            try
+            {
+                SpiDevice spi = new SpiDevice(spiConn);
+                screen = new Sitronix.ST7735.ST7735Controller(spi, pinControl, pinReset, screenSize);
+                //screen = new ST7735(CSPinNumber, PinControl, PinReset, spi);//, pinControl, pinReset, screenSize);
+                //this.Width = screen.Width;
+                //this.Height = screen.Height;
+                screen.SetDataAccessControl(true, true, false, false); //Rotate the screen.
+                screen.SetDrawWindow(0, 0, Width, Height);
+                screen.Enable();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
         }
-       
+
+
         // You may need to add this to send an optional buffer...
         public void Flush()
         {
+
             screen.DrawBuffer(this.Buffer);
         }
+        /*
+        public override void Clear()
+        {
+            screen.ClearScreen();
+            // add optional clear if buffer is used
+        }
+        public override void SetPixel(int x, int y, uint color)
+        {
+            screen.DrawPixel(x, y, (ushort)color);
+            // add code to buffer pixels or send directly to display
+        }*/
 
         public void Dispose()
         {
@@ -270,8 +302,8 @@ namespace SimpleDrawing
                 DrawBalls();
                 if (Screen is SimpleDrawing.SSD1306Imp)
                     ((SSD1306Imp)Screen).Flush();
-                else
-                    ((ST7735Imp)Screen).Flush();
+                //else
+                //    ((ST7735Imp)Screen).Flush();
                 Thread.Sleep(1);
             }
         }
