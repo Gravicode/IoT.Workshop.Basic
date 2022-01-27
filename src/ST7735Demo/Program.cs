@@ -13,7 +13,7 @@ namespace ST7735Demo
         public static void Main()
         {
             //Debug.WriteLine("Hello from nanoFramework!");
-            DemoST7735();
+            DemoST7735_2();
             Thread.Sleep(Timeout.Infinite);
 
             // Browse our samples repository: https://github.com/nanoframework/samples
@@ -50,6 +50,18 @@ namespace ST7735Demo
             //Thread.Sleep(500);
 
         }
+
+        static void DemoST7735_2()
+        {
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO23, DeviceFunction.SPI1_MOSI);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO18, DeviceFunction.SPI1_CLOCK);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO19, DeviceFunction.SPI1_MISO);
+            //pin esp32
+            //cs = 13, control = 12, reset = 14
+            var basicGfx = new ST7735Imp2(nanoFramework.Hardware.Esp32.Gpio.IO13, nanoFramework.Hardware.Esp32.Gpio.IO12, nanoFramework.Hardware.Esp32.Gpio.IO14);
+         
+        }
+
         public class ST7735Imp : BasicGraphics, IDisposable
         {
 
@@ -59,10 +71,10 @@ namespace ST7735Demo
             {
 
 
-                var gpio = new GpioController();
+                //var gpio = new GpioController();
                 //var pinCS = gpio.OpenPin(CSPinNumber, PinMode.Output);
-                var pinControl = gpio.OpenPin(PinControl, PinMode.Output);
-                var pinReset = gpio.OpenPin(PinReset, PinMode.Output);
+                //var pinControl = gpio.OpenPin(PinControl, PinMode.Output);
+                //var pinReset = gpio.OpenPin(PinReset, PinMode.Output);
 
                 //pinControl.Write(PinValue.Low);
                 //pinCS.Write(PinValue.Low);
@@ -71,9 +83,11 @@ namespace ST7735Demo
                 var spiConn = ST7735.GetConnectionSettings(PinValue.Low, CSPinNumber);
                 try
                 {
+                    Random rnd = new Random();
                     SpiDevice spi = new SpiDevice(spiConn);
                     //screen = new Sitronix.ST7735.ST7735Controller(spi, pinControl, pinReset, screenSize);
                     screen = new ST7735(CSPinNumber, PinControl, PinReset, spi);//, pinControl, pinReset, screenSize);
+                   
                     //this.Width = screen.Width;
                     //this.Height = screen.Height;
                     //screen.SetDataAccessControl(true, true, false, false); //Rotate the screen.
@@ -103,6 +117,41 @@ namespace ST7735Demo
             {
                 screen.DrawPixel(x, y, (ushort)color);
                 // add code to buffer pixels or send directly to display
+            }
+
+            public void Dispose()
+            {
+                screen.Dispose();
+            }
+        }
+
+        public class ST7735Imp2 : IDisposable
+        {
+
+            //Sitronix.ST7735.ST7735Controller screen;
+            ST7735 screen;
+            public ST7735Imp2(int CSPinNumber, int PinControl, int PinReset) 
+            {
+                var spiConn = ST7735.GetConnectionSettings(PinValue.Low, CSPinNumber);
+                try
+                {
+                    Random rnd = new Random();
+                    SpiDevice spi = SpiDevice.Create(spiConn);
+                    screen = new ST7735(CSPinNumber, PinControl, PinReset, spi);//, pinControl, pinReset, screenSize);
+
+                    screen.ClearScreen();
+
+                    screen.DrawCircle(50, 50, 10, 20);
+                    screen.DrawLine(10, 80, 80, 80, 25);
+                    screen.Refresh();
+                    
+
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.ToString());
+                }
             }
 
             public void Dispose()

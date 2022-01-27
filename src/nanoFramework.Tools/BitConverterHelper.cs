@@ -97,12 +97,12 @@ namespace nanoFramework.Tools
             }
 
         }*/
-
+        /*
         public static void SwapEndianness(byte[] data, int groupsize)
         {
-            FlipInt32(data);
+            //FlipInt32(data);
         }
-        /*
+        */
         //check if this method is correct or no
         public static void SwapEndianness(byte[] data, int groupsize)
         {
@@ -119,7 +119,7 @@ namespace nanoFramework.Tools
                            ((x & 0x00ff0000) >> 8) +
                            ((x & 0xff000000) >> 24));
         }
-        */
+        /*
         static void Swap(ref byte a, ref byte b)
         {
             var temp = a;
@@ -144,7 +144,7 @@ namespace nanoFramework.Tools
            
             return rawData;
         }
-
+        */
 
     }
 }

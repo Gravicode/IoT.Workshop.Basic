@@ -77,7 +77,7 @@ namespace SimpleDrawing
             for (var i = 1; i < 100; i++)
                 basicGfx.DrawCircle((uint)color.Next(), i, 80, 5);
 
-            //basicGfx.Flush();
+            basicGfx.Flush();
 
             Thread.Sleep(3000);
             //bounching balls demo
@@ -179,6 +179,7 @@ namespace SimpleDrawing
                 screen.SetDataAccessControl(true, true, false, false); //Rotate the screen.
                 screen.SetDrawWindow(0, 0, Width, Height);
                 screen.Enable();
+                
             }
             catch (Exception ex)
             {
@@ -192,6 +193,7 @@ namespace SimpleDrawing
         {
 
             screen.DrawBuffer(this.Buffer);
+           
         }
         /*
         public override void Clear()
@@ -302,8 +304,8 @@ namespace SimpleDrawing
                 DrawBalls();
                 if (Screen is SimpleDrawing.SSD1306Imp)
                     ((SSD1306Imp)Screen).Flush();
-                //else
-                //    ((ST7735Imp)Screen).Flush();
+                else
+                    ((ST7735Imp)Screen).Flush();
                 Thread.Sleep(1);
             }
         }
