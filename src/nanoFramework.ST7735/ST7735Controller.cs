@@ -62,12 +62,12 @@ namespace Sitronix.ST7735
           PinValue chipSelectType,
           int chipSelectLine)
         {
+
             var con = new SpiConnectionSettings(1, chipSelectLine);
 
             con.Mode = SpiMode.Mode3;// Mode3;
-            con.ClockFrequency = 12000000;//12000000
             con.ChipSelectLineActiveState = chipSelectType;
-            //ChipSelectLine = chipSelectLine
+            con.ClockFrequency = 12_000_000;
             return con;
 
         }
@@ -304,17 +304,17 @@ namespace Sitronix.ST7735
                 throw new NotSupportedException();
             this.SendDrawCommand();
             BitConverterHelper.SwapEndianness(buffer, 2);
-            var arr = new byte[buffer.Length + 7];
-            for (var i = 0; i < buffer.Length; i++) arr[i] = buffer[i];
-            arr[buffer.Length + 0] = (byte)x;
-            arr[buffer.Length + 1] = (byte)y;
-            arr[buffer.Length + 2] = (byte)width;
-            arr[buffer.Length + 3] = (byte)height;
-            arr[buffer.Length + 4] = (byte)originalWidth;
-            arr[buffer.Length + 5] = (byte)columnMultiplier;
-            arr[buffer.Length + 6] = (byte)rowMultiplier;
+            //var arr = new byte[buffer.Length + 7];
+            //for (var i = 0; i < buffer.Length; i++) arr[i] = buffer[i];
+            //arr[buffer.Length + 0] = (byte)x;
+            //arr[buffer.Length + 1] = (byte)y;
+            //arr[buffer.Length + 2] = (byte)width;
+            //arr[buffer.Length + 3] = (byte)height;
+            //arr[buffer.Length + 4] = (byte)originalWidth;
+            //arr[buffer.Length + 5] = (byte)columnMultiplier;
+            //arr[buffer.Length + 6] = (byte)rowMultiplier;
             //this.spi.Write(buffer, x, y, width, height, originalWidth, columnMultiplier, rowMultiplier);
-            this.spi.Write(arr);
+            this.spi.Write(new SpanByte(buffer));
             BitConverterHelper.SwapEndianness(buffer, 2);
         }
 

@@ -73,9 +73,9 @@ namespace SimpleDrawing
             basicGfx.DrawString("BMC Training", colorBlue, 35, 40, 1, 1);
             basicGfx.DrawString("ESP32 - STM32F4", colorRed, 35, 60, 1, 1);
 
-            Random color = new Random();
-            for (var i = 1; i < 100; i++)
-                basicGfx.DrawCircle((uint)color.Next(), i, 80, 5);
+            //Random color = new Random();
+            //for (var i = 1; i < 100; i++)
+            //    basicGfx.DrawCircle((uint)color.Next(), i, 80, 5);
 
             basicGfx.Flush();
 
@@ -166,7 +166,15 @@ namespace SimpleDrawing
 
             //pinControl.Write(PinValue.Low);
             //pinCS.Write(PinValue.Low);
-
+            SpiBusInfo spiBusInfo = SpiDevice.GetBusInfo(1);
+            Debug.WriteLine($"{nameof(spiBusInfo.ChipSelectLineCount)}: {spiBusInfo.ChipSelectLineCount}");
+            Debug.WriteLine($"{nameof(spiBusInfo.MaxClockFrequency)}: {spiBusInfo.MaxClockFrequency}");
+            Debug.WriteLine($"{nameof(spiBusInfo.MinClockFrequency)}: {spiBusInfo.MinClockFrequency}");
+            Debug.WriteLine($"{nameof(spiBusInfo.SupportedDataBitLengths)}: ");
+            foreach (var data in spiBusInfo.SupportedDataBitLengths)
+            {
+                Debug.WriteLine($"  {data}");
+            }
             var spiConn = Sitronix.ST7735.ST7735Controller.GetConnectionSettings(PinValue.Low, CSPinNumber);
             //var spiConn = ST7735.GetConnectionSettings(PinValue.Low, CSPinNumber);
             try
@@ -177,7 +185,7 @@ namespace SimpleDrawing
                 //this.Width = screen.Width;
                 //this.Height = screen.Height;
                 screen.SetDataAccessControl(true, true, false, false); //Rotate the screen.
-                screen.SetDrawWindow(0, 0, Width, Height);
+                screen.SetDrawWindow(0, 0, Width-1, Height-1);
                 screen.Enable();
                 
             }
@@ -192,7 +200,7 @@ namespace SimpleDrawing
         public void Flush()
         {
 
-            screen.DrawBuffer(this.Buffer);
+            screen.DrawBufferNative(this.Buffer);
            
         }
         /*

@@ -137,7 +137,7 @@ namespace ST7735Demo
                 {
                     Random rnd = new Random();
                     SpiDevice spi = SpiDevice.Create(spiConn);
-                    screen = new ST7735(CSPinNumber, PinControl, PinReset, spi);//, pinControl, pinReset, screenSize);
+                    screen = new ST7735(CSPinNumber, PinControl, PinReset, spi);
 
                     screen.ClearScreen();
 
