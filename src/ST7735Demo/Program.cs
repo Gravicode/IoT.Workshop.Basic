@@ -12,19 +12,53 @@ namespace ST7735Demo
     {
         public static void Main()
         {
+            DemoN18();
             //Debug.WriteLine("Hello from nanoFramework!");
-            DemoST7735_2();
+            //DemoST7735_2();
             Thread.Sleep(Timeout.Infinite);
 
             // Browse our samples repository: https://github.com/nanoframework/samples
             // Check our documentation online: https://docs.nanoframework.net/
             // Join our lively Discord community: https://discord.gg/gCyBu8T
         }
-        static void DemoST7735()
+        static void DemoN18()
         {
             Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO23, DeviceFunction.SPI1_MOSI);
-            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO18, DeviceFunction.SPI1_CLOCK);
-            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO19, DeviceFunction.SPI1_MISO);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO19, DeviceFunction.SPI1_CLOCK);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO25, DeviceFunction.SPI1_MISO);
+            
+
+            DisplayN18 display = new DisplayN18(
+                 Gpio.IO14,                 //Reset
+                 Gpio.IO18,                 //BackLight 
+                 Gpio.IO12,                 //A0 (DC) Control Pin / Data Command
+                 "SPI1",      //SPI SCK/MOSI 
+                 Gpio.IO13                //chipSelect
+                );
+
+            display.TurnOn();
+
+            short i = 0;
+
+            display.DrawCircle(20, 20, 20, Color.Red);
+            display.DrawRectangle(40, 40, 40, 40, Color.Cyan);
+            display.DrawFilledRectangle(80, 80, 40, 40, Color.Blue);
+            display.DrawText(10, 30, "Hello BMC", Color.Green);
+            display.DrawText(30, 60, "from NanoFramework", Color.Green);
+
+            while (true)
+            {
+                i++;
+                display.DrawText(10, 10, i.ToString(), Color.Green);
+
+                Thread.Sleep(500);
+            }
+        }
+            static void DemoST7735()
+        {
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO23, DeviceFunction.SPI1_MOSI);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO19, DeviceFunction.SPI1_CLOCK);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO25, DeviceFunction.SPI1_MISO);
             //pin esp32
             //cs = 13, control = 12, reset = 14
             var basicGfx = new ST7735Imp(nanoFramework.Hardware.Esp32.Gpio.IO13, nanoFramework.Hardware.Esp32.Gpio.IO12, nanoFramework.Hardware.Esp32.Gpio.IO14, 160, 128);
@@ -54,8 +88,8 @@ namespace ST7735Demo
         static void DemoST7735_2()
         {
             Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO23, DeviceFunction.SPI1_MOSI);
-            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO18, DeviceFunction.SPI1_CLOCK);
-            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO19, DeviceFunction.SPI1_MISO);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO19, DeviceFunction.SPI1_CLOCK);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO25, DeviceFunction.SPI1_MISO);
             //pin esp32
             //cs = 13, control = 12, reset = 14
             var basicGfx = new ST7735Imp2(nanoFramework.Hardware.Esp32.Gpio.IO13, nanoFramework.Hardware.Esp32.Gpio.IO12, nanoFramework.Hardware.Esp32.Gpio.IO14);

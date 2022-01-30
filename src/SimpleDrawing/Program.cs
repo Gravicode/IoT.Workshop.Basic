@@ -18,9 +18,11 @@ namespace SimpleDrawing
         {
             //demo using internal graphic controller
             //DemoBasic();
-            
+
+            DemoN18();
+
             //demo st7735
-            DemoST7735();
+            //DemoST7735();
             
             //demossd1306
             //DemoSSD1306();
@@ -55,11 +57,41 @@ namespace SimpleDrawing
             //Thread.Sleep(500);
 
         }*/
+        static void DemoN18()
+        {
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO23, DeviceFunction.SPI1_MOSI);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO19, DeviceFunction.SPI1_CLOCK);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO25, DeviceFunction.SPI1_MISO);
+            //pin esp32
+            //cs = 13, control = 12, reset = 14
+            var basicGfx = new ST7735Imp3( nanoFramework.Hardware.Esp32.Gpio.IO13, nanoFramework.Hardware.Esp32.Gpio.IO12, nanoFramework.Hardware.Esp32.Gpio.IO14, 160, 128);
+            var colorBlue = BasicGraphics.ColorFromRgb(0, 0, 255);
+            var colorGreen = BasicGraphics.ColorFromRgb(0, 255, 0);
+            var colorRed = BasicGraphics.ColorFromRgb(255, 0, 0);
+            //var colorWhite = BasicGraphics.ColorFromRgb(255, 255, 255);
+
+            basicGfx.Clear();
+            basicGfx.DrawString("NanoFramework Kick Ass!", colorGreen, 15, 15, 1, 1);
+            basicGfx.DrawString("BMC Training", colorBlue, 35, 40, 1, 1);
+            basicGfx.DrawString("ESP32 - STM32F4", colorRed, 35, 60, 1, 1);
+
+            //Random color = new Random();
+            //for (var i = 1; i < 100; i++)
+            //    basicGfx.DrawCircle((uint)color.Next(), i, 80, 5);
+
+            basicGfx.Flush();
+
+            Thread.Sleep(3000);
+            //bounching balls demo
+            //var balls = new BouncingBalls(basicGfx);
+            //Thread.Sleep(500);
+
+        }
         static void DemoST7735()
         {
             Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO23, DeviceFunction.SPI1_MOSI);
-            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO18, DeviceFunction.SPI1_CLOCK);
-            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO19, DeviceFunction.SPI1_MISO);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO19, DeviceFunction.SPI1_CLOCK);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO25, DeviceFunction.SPI1_MISO);
             //pin esp32
             //cs = 13, control = 12, reset = 14
             var basicGfx = new ST7735Imp(Sitronix.ST7735.ScreenSize._160x128,nanoFramework.Hardware.Esp32.Gpio.IO13, nanoFramework.Hardware.Esp32.Gpio.IO12, nanoFramework.Hardware.Esp32.Gpio.IO14,160,128);
@@ -115,7 +147,7 @@ namespace SimpleDrawing
 
         }
     }
-    
+
     /*
     public class BasicGraphicsImp : BasicGraphics, IDisposable
     {
@@ -150,6 +182,56 @@ namespace SimpleDrawing
             screen.Dispose();
         }
     }*/
+    public class ST7735Imp3 : BasicGraphics, IDisposable
+    {
+
+        DisplayN18 screen;
+        //ST7735 screen;
+        public ST7735Imp3(int CSPinNumber, int PinControl, int PinReset, uint ScreenWidth, uint ScreenHeight) : base(ScreenWidth, ScreenHeight, ColorFormat.Rgb565)
+        {
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO23, DeviceFunction.SPI1_MOSI);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO19, DeviceFunction.SPI1_CLOCK);
+            Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO25, DeviceFunction.SPI1_MISO);
+
+
+            screen = new DisplayN18(
+                 PinReset,                 //Reset
+                 Gpio.IO18,                 //BackLight 
+                 PinControl,                 //A0 (DC) Control Pin / Data Command
+                 1,      //SPI SCK/MOSI 
+                 Gpio.IO13                //chipSelect
+                );
+
+            screen.TurnOn();
+
+        }
+        
+
+        // You may need to add this to send an optional buffer...
+        public void Flush()
+        {
+
+            screen.DrawImage(this.Buffer);
+           
+        }
+
+        public override void Clear()
+        {  
+            screen.Clear();
+            // add optional clear if buffer is used
+        }
+        /*
+        public override void SetPixel(int x, int y, uint color)
+        {
+            screen.DrawPixel(x, y, (ushort)color);
+            // add code to buffer pixels or send directly to display
+        }*/
+
+        public void Dispose()
+        {
+            //screen.Dispose();
+        }
+    }
     public class ST7735Imp : BasicGraphics, IDisposable
     {
         
