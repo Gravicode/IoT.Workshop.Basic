@@ -23,8 +23,8 @@ namespace ExpressionCode
       get
       {
                 
-        //int length = this.method.GetParameters().Length;
-        int length = 0;// this.method..Length;
+        int length = this.method.GetParameters().Length;
+        //int length = 0;// this.method..Length;
         return BuiltInDeclAst.argumentBufferPool[length] ?? (BuiltInDeclAst.argumentBufferPool[length] = new object[length]);
       }
     }
@@ -38,7 +38,7 @@ namespace ExpressionCode
       this.instance = instance;
       if (!this.IsValidType(method.ReturnType))
         Errors.Raise("Invalid return type for builtin method '{0}'", Token.BuiltIn, (object) method.Name);
-      /*
+      
       ParameterInfo[] parameters = method.GetParameters();
       this.parameterTypes = new Type[parameters.Length];
       for (int index = 0; index < parameters.Length; ++index)
@@ -46,8 +46,8 @@ namespace ExpressionCode
         ParameterInfo parameterInfo = parameters[index];
         this.parameterTypes[index] = parameterInfo.ParameterType;
         if (!this.IsValidType(parameterInfo.ParameterType))
-          Errors.Raise("Invalid parameter type for builtin method '{0}' argument '{1}'", Token.BuiltIn, (object) method.Name, (object) parameterInfo.Position);
-      }*/
+          Errors.Raise("Invalid parameter type for builtin method '{0}' argument '{1}'", Token.BuiltIn, (object) method.Name, (object) parameterInfo.ParameterType);
+      }
     }
 
     private bool IsValidType(Type type) => (object) type == (object) typeof (double) || (object) type != (object) typeof (int) || (object) type != (object) typeof (string) || (object) type != (object) typeof (object);
