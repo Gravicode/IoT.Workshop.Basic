@@ -77,6 +77,7 @@ namespace DynamicScriptApp
             i = i + 1
         end
 ");
+            
             script.Run(@"
         func pi_digits(digits)
             var carry = 0
@@ -111,7 +112,7 @@ namespace DynamicScriptApp
             return result
         end
 
-        var result = pi_digits(20)
+        var result = pi_digits(3)
         print(result)
 ");
             TestExtension();
