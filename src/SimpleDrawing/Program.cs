@@ -1,5 +1,6 @@
 using BMC.Drivers.BasicGraphics;
 using nanoFramework.Hardware.Esp32;
+using nanoFramework.UI;
 //using nanoFramework.SSD1306B;
 using SolomonSystech.SSD1306;
 //using nanoFramework.UI;
@@ -17,9 +18,9 @@ namespace SimpleDrawing
         public static void Main()
         {
             //demo using internal graphic controller
-            //DemoBasic();
+            DemoBasic();
 
-            DemoN18();
+            //DemoN18();
 
             //demo st7735
             //DemoST7735();
@@ -31,23 +32,39 @@ namespace SimpleDrawing
             // Check our documentation online: https://docs.nanoframework.net/
             // Join our lively Discord community: https://discord.gg/gCyBu8T
         }
-        /*
+        
         static void DemoBasic()
         {
-            var basicGfx = new BasicGraphicsImp(320, 240);
+
+            int backLightPin = 18;
+            int chipSelect = 13;
+            int dataCommand = 12;
+            int reset = 14;
+            // Add the nanoFramework.Hardware.Esp32 to the solution
+            Configuration.SetPinFunction(25, DeviceFunction.SPI1_MISO);
+            Configuration.SetPinFunction(23, DeviceFunction.SPI1_MOSI);
+            Configuration.SetPinFunction(19, DeviceFunction.SPI1_CLOCK);
+            // Adjust as well the size of your screen and the position of the screen on the driver
+            DisplayControl.Initialize(new SpiConfiguration(1, chipSelect, dataCommand, reset, backLightPin), new ScreenConfiguration(0, 0, 160, 128));
+            // Depending on you ESP32, you may also have to use either PWM either GPIO to set the backlight pin mode on
+            // GpioController.OpenPin(backLightPin, PinMode.Output);
+            // GpioController.Write(backLightPin, PinValue.High);
+
+            var basicGfx = new BasicGraphicsImp(160, 128);
             var colorBlue = BasicGraphics.ColorFromRgb(0, 0, 255);
             var colorGreen = BasicGraphics.ColorFromRgb(0, 255, 0);
             var colorRed = BasicGraphics.ColorFromRgb(255, 0, 0);
             //var colorWhite = BasicGraphics.ColorFromRgb(255, 255, 255);
 
             basicGfx.Clear();
-            basicGfx.DrawString("NanoFramework Kick Ass!", colorGreen, 15, 15, 2, 1);
-            basicGfx.DrawString("BMC Training", colorBlue, 35, 40, 2, 2);
-            basicGfx.DrawString("ESP32 - STM32F4", colorRed, 35, 60, 2, 2);
+            basicGfx.DrawString("NanoFramework Kick Ass!", colorGreen, 15, 15, 1, 1);
+            basicGfx.DrawString("BMC Training", colorBlue, 35, 40, 1, 1);
+            basicGfx.DrawString("ESP32 - STM32F4", colorRed, 35, 60, 1, 1);
 
-            Random color = new Random();
-            for (var i = 20; i < 140; i++)
-                basicGfx.DrawCircle((uint)color.Next(), i, 100, 15);
+
+            //Random color = new Random();
+            //for (var i = 1; i < 100; i++)
+            //    basicGfx.DrawCircle((uint)color.Next(), i, 80, 5);
 
             basicGfx.Flush();
 
@@ -56,7 +73,7 @@ namespace SimpleDrawing
             //var balls = new BouncingBalls(basicGfx);
             //Thread.Sleep(500);
 
-        }*/
+        }
         static void DemoN18()
         {
             Configuration.SetPinFunction(nanoFramework.Hardware.Esp32.Gpio.IO23, DeviceFunction.SPI1_MOSI);
@@ -148,7 +165,7 @@ namespace SimpleDrawing
         }
     }
 
-    /*
+    
     public class BasicGraphicsImp : BasicGraphics, IDisposable
     {
         private Bitmap screen;
@@ -181,7 +198,7 @@ namespace SimpleDrawing
         {
             screen.Dispose();
         }
-    }*/
+    }
     public class ST7735Imp3 : BasicGraphics, IDisposable
     {
 
@@ -302,7 +319,7 @@ namespace SimpleDrawing
             screen.Dispose();
         }
     }
-
+    
     public class SSD1306Imp : BasicGraphics, IDisposable
     {
 
